@@ -13,14 +13,16 @@ V: .word -697, 1625, -873, 1375, -158, 1162, -1590, -1971, -345, 260, -956, 1329
 main:
     push {fp, lr} @ salvo il valore lr e fp nello stack
     mov fp, sp @ aggiorno il valore di fp
-    sub sp, sp, #8 faccio spazio per salvare le due variabili
+    sub sp, sp, #8 @ faccio spazio per salvare le due variabili
 
 	ldr r1, =n	@ carica indirizzo con la dimensione
 	ldr r1, [r1] @ carica la lunghezza dell'array in r1; variabile 1
 	ldr r0, =V	@ indirizzo del vettore in r0; variabile 2
-	str r0, [fp, #-4] @ salvo sullo stack la dimensione dell'array
-	str r1, [fp, #-8] @ salvo sullo stack l'indirizzo dell'array
-	push {r0-r1} @ salvo il valore delle variabili 1 e 2 nello stack
+	str r0, [fp, #-8] @ salvo sullo stack la dimensione dell'array
+	str r1, [fp, #-4] @ salvo sullo stack l'indirizzo dell'array
+	@ salvo il valore delle variabili 1 e 2 nello stack
+	push {r0} 
+	push {r1}
 
 	bl find_max	@ chiama la funzione per trovare il massimo
 
