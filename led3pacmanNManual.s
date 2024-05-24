@@ -2,8 +2,8 @@
 n: .word 25  @ Numero di elementi nell'array V
 V: .word 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 2, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1  @ Array di valori
 
-.global _start
-_start:
+.global main
+main:
     @ Salva i registri modificati
     push {r0-r3, r10, lr}
 
