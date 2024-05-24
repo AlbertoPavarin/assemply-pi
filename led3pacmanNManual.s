@@ -2,10 +2,10 @@
 n: .word 25  @ Numero di elementi nell'array V
 V: .word 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 2, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1  @ Array di valori
 
+.text
 .global main
 main:
-    @ Salva i registri modificati
-    push {r0-r3, r10, lr}
+    push {r0-r3, r10, lr} @ Salva i registri modificati
 
     mov r1, #1  @ Imposta il primo LED come acceso
     bl set_gpio  @ Inizializza la GPIO
