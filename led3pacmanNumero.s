@@ -7,48 +7,50 @@
 @ read_buttons : legge lo stato dei 2 pulsani e lo restituisce nei 2 bit meno significativi di R0.
 @                 ogni bit corrisponde allo stato di un pulsante.
 
-
 .text
-
 .global main
-main: 
+
+main:
 	@ Salva i registri modificati
 	push {r0,r1,lr}
-	
+
 	@ inizializza la GPIO
 	bl set_gpio
-	
+
 	mov r1, #1  @ valore iniziale led
 
-loop:   bl read_buttons  @ leggo lo stato dei pulsanti
-        cmp r0, #1   @ è premuto dx ?
-        moveq   r1, r1, ror #1      @ si: ruota verso destra
-        
-        cmp r1, #0
+loop:
+    bl read_buttons  @ leggo lo stato dei pulsanti
+    cmp r0, #1   @ è premuto dx ?
+    moveq r1, r1, ror #1      @ si: ruota verso destra
+
+    cmp r1, #0
 	blt dx
-        
-        cmp     r0, #2   @ è premuto sx?
-	moveq   r1, r1, ror #31     @ si: ruota verso sinistra
-	
+
+    cmp r0, #2   @ è premuto sx?
+	moveq r1, r1, ror #31 @ si: ruota verso sinistra
+
 	cmp r1, #15
 	bgt sx
- 
- ret:	mov r0, r1   @ inizializzo r0
+
+ret:
+    mov r0, r1   @ inizializzo r0
 
 	bl write_led @ aggiorno i led
 	bl write_number
-        b loop
+    b loop
 
 	@ Ripristina registri modificati
 	pop {r0,r1,lr}
 	@ Termina e ritorna dalla funzione main
 	mov pc, lr
 
-sx:	cmp r1, #32
+sx:
+    cmp r1, #32
 	blt ret
 	mov r1, #1
 	b ret
-	
-dx:	mov r1, #8
-	b ret
 
+dx:
+    mov r1, #8
+	b ret
